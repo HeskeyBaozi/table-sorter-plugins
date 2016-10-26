@@ -2,6 +2,9 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const myPackage = require('./package');
+const banner = `${myPackage.name} ${myPackage.version} - ${myPackage.description}\nCopyright (c) ${ new Date().getFullYear() } ${myPackage.author} - ${myPackage.homepage}\nLicense: ${myPackage.license}`;
+
 
 module.exports = {
     context: __dirname,
@@ -30,6 +33,9 @@ module.exports = {
         'jquery': 'jQuery',
         'lodash': '_'
     },
+    plugins: [
+        new webpack.BannerPlugin(banner)
+    ],
     devtool: '#source-map'
 };
 
