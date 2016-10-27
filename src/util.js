@@ -6,8 +6,10 @@
  * @param rightNumber
  * @return {number}
  */
-export function numberCompare(leftNumber, rightNumber) {
-    return leftNumber - rightNumber;
+export function compare(leftNumber, rightNumber) {
+    return areBothNumber(leftNumber, rightNumber)
+        ? parseFloat(leftNumber) - parseFloat(rightNumber)
+        : generalCompare(leftNumber, rightNumber);
 }
 
 /**
@@ -16,7 +18,7 @@ export function numberCompare(leftNumber, rightNumber) {
  * @param right
  * @return {number}
  */
-export function generalCompare(left, right) {
+function generalCompare(left, right) {
     if (left < right) {
         return -1;
     } else if (left > right) {
@@ -31,6 +33,16 @@ export function generalCompare(left, right) {
  * @param text
  * @return {boolean}
  */
-export function isNumber(text) {
+function isNumber(text) {
     return /^\d+(\.\d+)?$/.test(text.trim());
+}
+
+/**
+ * check they are both number.
+ * @param left
+ * @param right
+ * @return {boolean}
+ */
+function areBothNumber(left, right) {
+    return isNumber(left) && isNumber(right);
 }

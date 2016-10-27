@@ -1,6 +1,7 @@
 'use strict';
 
-import {isNumber, numberCompare, generalCompare} from './util.js';
+import {compare} from './util.js';
+import $ from 'jquery';
 
 /**
  * Style define.
@@ -54,11 +55,10 @@ function toggleIncreaseClass($columnTitle) {
  * @return {function(*=, *=)}
  */
 function compareFactory(column, isIncreasing) {
-    const getTextContent = row => $($(row).children('td')[column]).text();
     return (left, right) => {
         let result = [left, right]
-            .map(getTextContent)
-            .reduce(areBothNumber(left, right) ? numberCompare : generalCompare);
+            .map(row => $($(row).children('td')[column]).text())
+            .reduce(compare);
         return isIncreasing ? result : 0 - result;
     };
 }
@@ -70,14 +70,4 @@ function compareFactory(column, isIncreasing) {
  */
 function isIncreasing($columnTitle) {
     return $columnTitle.hasClass(Style.increase);
-}
-
-/**
- * check they are both number.
- * @param left
- * @param right
- * @return {boolean}
- */
-function areBothNumber(left, right) {
-    return isNumber(left) && isNumber(right);
 }
